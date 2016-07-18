@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colors War.CSharp.Plugins", "Colors War.CSharp.Plugins.csproj", "{4D8419A1-CEE6-A0DE-A0DB-B9609A11346A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colors War.CSharp", "Colors War.CSharp.csproj", "{77A78607-05F7-E234-4DDA-3DFCCB5582EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colors War.CSharp.Editor", "Colors War.CSharp.Editor.csproj", "{341A2C74-AC28-073D-CBAD-05DCDE41DF48}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4D8419A1-CEE6-A0DE-A0DB-B9609A11346A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D8419A1-CEE6-A0DE-A0DB-B9609A11346A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D8419A1-CEE6-A0DE-A0DB-B9609A11346A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D8419A1-CEE6-A0DE-A0DB-B9609A11346A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77A78607-05F7-E234-4DDA-3DFCCB5582EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77A78607-05F7-E234-4DDA-3DFCCB5582EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77A78607-05F7-E234-4DDA-3DFCCB5582EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77A78607-05F7-E234-4DDA-3DFCCB5582EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{341A2C74-AC28-073D-CBAD-05DCDE41DF48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{341A2C74-AC28-073D-CBAD-05DCDE41DF48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{341A2C74-AC28-073D-CBAD-05DCDE41DF48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{341A2C74-AC28-073D-CBAD-05DCDE41DF48}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
