@@ -39,6 +39,7 @@ public class CWMainStageManager : MonoBehaviour
 
 	public Camera MainCam = null;
 	public Transform CanvasTransform = null;
+	public Transform StageTransform = null;
 	public GameObject NodePrefab = null;
 	public GameObject ArmyPrefab = null;
 	public GameObject DirectionImagePrefab = null;
@@ -49,10 +50,10 @@ public class CWMainStageManager : MonoBehaviour
 	private CWStageNode _selectedNode = null;
 	private Dictionary<int, NodeConnectionData> _nodeLinkDataList = new Dictionary<int, NodeConnectionData>();
 
-	private GameObject _dragTarget = null;
-	private bool _isMouseDragging = false;
-	private Vector3 _mousePos = Vector3.zero;
-	private GameObject _instDirectionImage = null;
+	//private GameObject _dragTarget = null;
+	//private bool _isMouseDragging = false;
+	//private Vector3 _mousePos = Vector3.zero;
+	//private GameObject _instDirectionImage = null;
 
 	void Awake()
 	{
@@ -70,56 +71,56 @@ public class CWMainStageManager : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetMouseButtonDown(0))
-		{
-			CWUtility.Log("Mouse Button Down");
-			_dragTarget = GetDragObject();
+		//if (Input.GetMouseButtonDown(0))
+		//{
+		//	CWUtility.Log("Mouse Button Down");
+		//	_dragTarget = GetDragObject();
 
-			if (_dragTarget != null)
-			{
-				_isMouseDragging = true;
-				if (DirectionImagePrefab != null)
-				{
-					_instDirectionImage = Instantiate(DirectionImagePrefab) as GameObject;
-					_instDirectionImage.transform.SetParent(CanvasTransform);
-					_instDirectionImage.transform.localScale = Vector3.one;
-					_instDirectionImage.transform.localPosition = _dragTarget.transform.localPosition;
-				}
-			}
-		}
-		else if (Input.GetMouseButtonUp(0))
-		{
-			_isMouseDragging = false;
-			if (_instDirectionImage != null)
-			{
-				Destroy(_instDirectionImage);
-			}
-		}
+		//	if (_dragTarget != null)
+		//	{
+		//		_isMouseDragging = true;
+		//		if (DirectionImagePrefab != null)
+		//		{
+		//			_instDirectionImage = Instantiate(DirectionImagePrefab) as GameObject;
+		//			_instDirectionImage.transform.SetParent(CanvasTransform);
+		//			_instDirectionImage.transform.localScale = Vector3.one;
+		//			_instDirectionImage.transform.localPosition = _dragTarget.transform.localPosition;
+		//		}
+		//	}
+		//}
+		//else if (Input.GetMouseButtonUp(0))
+		//{
+		//	_isMouseDragging = false;
+		//	if (_instDirectionImage != null)
+		//	{
+		//		Destroy(_instDirectionImage);
+		//	}
+		//}
 
-		if (_isMouseDragging)
-		{
-			//마우스 좌표를 받아온다.
-			_mousePos = Input.mousePosition;
-			_mousePos.x -= Screen.width * 0.5f;
-			_mousePos.y -= Screen.height * 0.5f;
+		//if (_isMouseDragging)
+		//{
+		//	//마우스 좌표를 받아온다.
+		//	_mousePos = Input.mousePosition;
+		//	_mousePos.x -= Screen.width * 0.5f;
+		//	_mousePos.y -= Screen.height * 0.5f;
 
-			//이미지 수정
-			var rectCom = _instDirectionImage.GetComponent<RectTransform>();
-			if (rectCom != null)
-			{
-				float size = Vector3.Magnitude(_mousePos - _instDirectionImage.transform.localPosition);
-				rectCom.sizeDelta = new Vector2(rectCom.sizeDelta.x, size);
+		//	//이미지 수정
+		//	var rectCom = _instDirectionImage.GetComponent<RectTransform>();
+		//	if (rectCom != null)
+		//	{
+		//		float size = Vector3.Magnitude(_mousePos - _instDirectionImage.transform.localPosition);
+		//		rectCom.sizeDelta = new Vector2(rectCom.sizeDelta.x, size);
 
-				Vector3 dragVector = _mousePos - _instDirectionImage.transform.localPosition;
-				float dotProduct = Vector3.Dot(Vector3.up, dragVector);
-				float theta = Mathf.Acos(dotProduct / dragVector.magnitude);
+		//		Vector3 dragVector = _mousePos - _instDirectionImage.transform.localPosition;
+		//		float dotProduct = Vector3.Dot(Vector3.up, dragVector);
+		//		float theta = Mathf.Acos(dotProduct / dragVector.magnitude);
 
-				if (dragVector.x > 0)
-					theta *= -1;
+		//		if (dragVector.x > 0)
+		//			theta *= -1;
 
-				_instDirectionImage.transform.localRotation = Quaternion.AngleAxis(theta * 180.0f / Mathf.PI, Vector3.forward);
-			}
-		}
+		//		_instDirectionImage.transform.localRotation = Quaternion.AngleAxis(theta * 180.0f / Mathf.PI, Vector3.forward);
+		//	}
+		//}
 	}
 
 	/// <summary>
@@ -217,7 +218,7 @@ public class CWMainStageManager : MonoBehaviour
 				foreach (var iter in _nodeLinkDataList)
 				{
 					var armyObject = Instantiate(ArmyPrefab);
-					armyObject.transform.SetParent(CanvasTransform);
+					armyObject.transform.SetParent(StageTransform);
 					armyObject.transform.localScale = Vector3.one;
 
 					iter.Value.SendColor(armyObject);
