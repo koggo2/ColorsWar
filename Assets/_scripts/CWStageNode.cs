@@ -15,14 +15,16 @@ public class CWStageNode : MonoBehaviour
 {
 	// Sprite Renderer
 	public SpriteRenderer SpriteRenderer = null;
+	public string OccupiedSpritePath = string.Empty;
+	public string UnoccupiedSpritePath = string.Empty;
+	public string OccupingSpritePath = string.Empty;
+	public SpriteRenderer SelectedSprite;
 	// 점령에 필요한 충전 값.
 	public int NodeChargeMaxValue = 10;
 	// Node Id
 	public int DefaultId = 0;
 	// Node 상태
 	public NodeState DefaultState = NodeState.Unoccupied;
-	// Node 와 연결되어 있는 Node 리스트
-	public List<CWStageNode> LinkedStageNode = new List<CWStageNode>(); 
 
 	#region Properties
 	public int NodeId { get { return _nodeId; } }
@@ -131,13 +133,10 @@ public class CWStageNode : MonoBehaviour
 	{
 		_isSelected = selected;
 
-		//if (NodeButton != null && NodeButton.enabled)
-		//{
-		//	if(_isSelected)
-		//		NodeButton.image.color = Color.green;
-		//	else
-		//		NodeButton.image.color = Color.white;
-		//}
+		if (SelectedSprite != null)
+		{
+			SelectedSprite.enabled = selected;
+		}
 	}
 
 	/// <summary>
@@ -151,12 +150,13 @@ public class CWStageNode : MonoBehaviour
 			switch (nodeState)
 			{
 				case NodeState.Unoccupied:
-					SpriteRenderer.color = Color.white;
+					SpriteRenderer.sprite = Resources.Load<Sprite>(UnoccupiedSpritePath);
 					break;
 				case NodeState.Charged:
+					SpriteRenderer.sprite = Resources.Load<Sprite>(OccupingSpritePath);
 					break;
 				case NodeState.Occupied:
-					SpriteRenderer.color = Color.blue;
+					SpriteRenderer.sprite = Resources.Load<Sprite>(OccupiedSpritePath);
 					break;
 				default:
 					break;

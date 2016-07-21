@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.UI;
 
+[Serializable]
 public class Node
 {
 	public int NodeId = 0;
@@ -42,11 +44,12 @@ public class CWMainStageManager : MonoBehaviour
 	public Transform StageTransform = null;
 	public GameObject NodePrefab = null;
 	public GameObject ArmyPrefab = null;
-	public GameObject DirectionImagePrefab = null;
+	public GameObject LinePrefab = null;
+
+	public List<Node> NodeList = new List<Node>();
 
 	public List<CWStageNode> CWStageNodeBufferForTest = new List<CWStageNode>();
-
-	private StageData _stageData = null;
+	
 	private CWStageNode _selectedNode = null;
 	private Dictionary<int, NodeConnectionData> _nodeLinkDataList = new Dictionary<int, NodeConnectionData>();
 
@@ -66,6 +69,7 @@ public class CWMainStageManager : MonoBehaviour
 	void Start()
 	{
 		ReadStageData();
+		DrawLine();
 		StartCoroutine(CoroutineUpdate());
 	}
 
@@ -130,12 +134,47 @@ public class CWMainStageManager : MonoBehaviour
 	/// </summary>
 	private void ReadStageData()
 	{
-		_stageData = new StageData();
+		//NodeList = new StageData();
 
-		_stageData.NodeMap.Add(0, new Node(0, CWStageNodeBufferForTest[0]));
-		_stageData.NodeMap.Add(1, new Node(1, CWStageNodeBufferForTest[1]));
-		_stageData.NodeMap.Add(2, new Node(2, CWStageNodeBufferForTest[2]));
-		_stageData.NodeMap.Add(3, new Node(3, CWStageNodeBufferForTest[3]));
+		//NodeList.NodeMap.Add(0, new Node(0, CWStageNodeBufferForTest[0]));
+		//NodeList.NodeMap.Add(1, new Node(1, CWStageNodeBufferForTest[1]));
+		//NodeList.NodeMap.Add(2, new Node(2, CWStageNodeBufferForTest[2]));
+		//NodeList.NodeMap.Add(3, new Node(3, CWStageNodeBufferForTest[3]));
+	}
+
+	private void DrawLine()
+	{
+		if (LinePrefab == null)
+		{
+			return;
+		}
+
+		for (int i = 0; i < NodeList.Count; ++i)
+		{
+			Node node = NodeList[i];
+			if (node.StageNode != null && node.LinkedNodeIdList != null)
+			{
+				for (int idListIndex = 0; idListIndex < node.LinkedNodeIdList.Count; ++idListIndex)
+				{
+					Node targetNode = NodeList[node.LinkedNodeIdList[idListIndex]];
+
+					GameObject line = Instantiate(LinePrefab) as GameObject;
+					LineRenderer lineRenderer = line.GetComponent<LineRenderer>();
+					if (lineRenderer != null)
+					{
+						lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
+						lineRenderer.SetColors(Color.yellow, Color.black);
+						lineRenderer.SetWidth(0.2F, 0.2F);
+						lineRenderer.SetVertexCount(2);
+						lineRenderer.SetPositions(new Vector3[]
+						{
+						new Vector3(node.StageNode.Position.x, node.StageNode.Position.y, 1),
+						new Vector3(targetNode.StageNode.Position.x, targetNode.StageNode.Position.y, 1),
+						});
+					}
+				}
+			}
+		}
 	}
 
 	/// <summary>
@@ -165,7 +204,14 @@ public class CWMainStageManager : MonoBehaviour
 	public void SetNodeLink(CWStageNode cwStageNode)
 	{
 		CWUtility.Log(cwStageNode.DefaultId);
+		// 선택된 노드가 없다면 아무것도 수행하지 않는다.
 		if (_selectedNode == null)
+		{
+			return;
+		}
+
+		// 선택된 노드와 대상 노드는 서로 연결관계가 아니라면 아무것도 수행하지 않는다.
+		if (!NodeList[_selectedNode.DefaultId].LinkedNodeIdList.Contains(cwStageNode.DefaultId))
 		{
 			return;
 		}
