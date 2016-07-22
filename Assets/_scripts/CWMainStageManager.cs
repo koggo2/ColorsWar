@@ -40,7 +40,7 @@ public class CWMainStageManager : MonoBehaviour
 	#endregion
 
 	public Camera MainCam = null;
-	public Transform CanvasTransform = null;
+	public Transform CanvasUITransform = null;
 	public Transform StageTransform = null;
 	public GameObject NodePrefab = null;
 	public GameObject ArmyPrefab = null;
@@ -86,7 +86,7 @@ public class CWMainStageManager : MonoBehaviour
 		//		if (DirectionImagePrefab != null)
 		//		{
 		//			_instDirectionImage = Instantiate(DirectionImagePrefab) as GameObject;
-		//			_instDirectionImage.transform.SetParent(CanvasTransform);
+		//			_instDirectionImage.transform.SetParent(CanvasUITransform);
 		//			_instDirectionImage.transform.localScale = Vector3.one;
 		//			_instDirectionImage.transform.localPosition = _dragTarget.transform.localPosition;
 		//		}
@@ -134,12 +134,24 @@ public class CWMainStageManager : MonoBehaviour
 	/// </summary>
 	private void ReadStageData()
 	{
-		//NodeList = new StageData();
+		for (int i = 0; i < NodeList.Count; ++i)
+		{
+			Node node = NodeList[i];
+			CWStageNode originNode = node.StageNode;
 
-		//NodeList.NodeMap.Add(0, new Node(0, CWStageNodeBufferForTest[0]));
-		//NodeList.NodeMap.Add(1, new Node(1, CWStageNodeBufferForTest[1]));
-		//NodeList.NodeMap.Add(2, new Node(2, CWStageNodeBufferForTest[2]));
-		//NodeList.NodeMap.Add(3, new Node(3, CWStageNodeBufferForTest[3]));
+			if (originNode == null)
+				continue;
+
+			if (originNode.NodeLinkList == null)
+				originNode.NodeLinkList = new List<CWStageNode>();
+
+			for (int linkIndex = 0; linkIndex < node.LinkedNodeIdList.Count; ++linkIndex)
+			{
+				CWStageNode targetNode = NodeList[node.LinkedNodeIdList[linkIndex]].StageNode;
+				if(targetNode != null)
+					originNode.NodeLinkList.Add(targetNode);
+			}
+		}
 	}
 
 	private void DrawLine()
@@ -174,6 +186,25 @@ public class CWMainStageManager : MonoBehaviour
 					}
 				}
 			}
+		}
+	}
+
+	public void ClickOccupiedNode(CWStageNode cwStageNode)
+	{
+		if(_selectedNode != null)
+		{
+			if (_selectedNode == cwStageNode)
+			{
+				SetDispersionNode();
+			}
+			else
+			{
+				SetNodeLink(cwStageNode);
+			}
+		}
+		else
+		{
+			SetActivatedNode(cwStageNode);
 		}
 	}
 
@@ -216,11 +247,6 @@ public class CWMainStageManager : MonoBehaviour
 			return;
 		}
 
-		if (cwStageNode.State == NodeState.Occupied)
-		{
-			return;
-		}
-		
 		if (!_nodeLinkDataList.ContainsKey(_selectedNode.NodeId))
 		{
 			_nodeLinkDataList.Add(_selectedNode.NodeId, null);
