@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using FreeNet;
 using UnityEngine.UI;
 
 [Serializable]
@@ -39,7 +40,6 @@ public class CWMainStageManager : MonoBehaviour
 	private static CWMainStageManager _instance = null;
 	#endregion
 
-	public Camera MainCam = null;
 	public Transform CanvasUITransform = null;
 	public Transform StageTransform = null;
 	public GameObject NodePrefab = null;
@@ -49,7 +49,13 @@ public class CWMainStageManager : MonoBehaviour
 	public List<Node> NodeList = new List<Node>();
 
 	public List<CWStageNode> CWStageNodeBufferForTest = new List<CWStageNode>();
-	
+
+	// 네트워크
+	private string _input_text;
+	private CWNetworkManager _networkManager;
+	private List<string> _received_texts;
+	private Vector2 _currentScrollPos = new Vector2();
+
 	private CWStageNode _selectedNode = null;
 	private Dictionary<int, NodeConnectionData> _nodeLinkDataList = new Dictionary<int, NodeConnectionData>();
 
@@ -64,6 +70,10 @@ public class CWMainStageManager : MonoBehaviour
 		{
 			_instance = this;
 		}
+
+		_input_text = "";
+		_received_texts = new List<string>();
+		_networkManager = GameObject.Find("NetworkManager").GetComponent<CWNetworkManager>();
 	}
 
 	void Start()
@@ -125,6 +135,42 @@ public class CWMainStageManager : MonoBehaviour
 		//		_instDirectionImage.transform.localRotation = Quaternion.AngleAxis(theta * 180.0f / Mathf.PI, Vector3.forward);
 		//	}
 		//}
+	}
+
+	void OnGUI()
+	{
+		// Received text.  
+		GUILayout.BeginVertical();
+		_currentScrollPos = GUILayout.BeginScrollView(_currentScrollPos,
+			GUILayout.MaxWidth(Screen.width), GUILayout.MinWidth(Screen.width),
+			GUILayout.MaxHeight(Screen.height - 100), GUILayout.MinHeight(Screen.height - 100));
+
+		foreach (string text in this._received_texts)
+		{
+			GUILayout.BeginHorizontal();
+			GUI.skin.label.wordWrap = true;
+			GUILayout.Label(text);
+			GUILayout.EndHorizontal();
+		}
+
+		GUILayout.EndScrollView();
+		GUILayout.EndVertical();
+
+
+		// Input.  
+		GUILayout.BeginHorizontal();
+		this._input_text = GUILayout.TextField(this._input_text, GUILayout.MaxWidth(Screen.width - 100), GUILayout.MinWidth(Screen.width - 100),
+			GUILayout.MaxHeight(50), GUILayout.MinHeight(50));
+
+		if (GUILayout.Button("Send", GUILayout.MaxWidth(100), GUILayout.MinWidth(100), GUILayout.MaxHeight(50), GUILayout.MinHeight(50)))
+		{
+			CPacket msg = CPacket.create((short)PROTOCOL.CHAT_MSG_REQ);
+			msg.push(this._input_text);
+			this._networkManager.Send(msg);
+
+			this._input_text = "";
+		}
+		GUILayout.EndHorizontal();
 	}
 
 	/// <summary>
@@ -297,7 +343,7 @@ public class CWMainStageManager : MonoBehaviour
 				}
 			}
 			//yield return new WaitForEndOfFrame();
-			yield return new WaitForSeconds(1f);
+			yield return new WaitForSeconds(0.6f);
 		}
 	}
 
@@ -313,13 +359,16 @@ public class CWMainStageManager : MonoBehaviour
 		GameObject target = null;
 
 		//마우스 포이트 근처 좌표를 만든다.
-		Ray ray = MainCam.ScreenPointToRay(Input.mousePosition);
-
-		//마우스 근처에 오브젝트가 있는지 확인
-		if (true == (Physics.Raycast(ray.origin, ray.direction * 10, out hit)))
+		if(Camera.main != null)
 		{
-			//있으면 오브젝트를 저장한다.
-			target = hit.collider.gameObject;
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+			//마우스 근처에 오브젝트가 있는지 확인
+			if (true == (Physics.Raycast(ray.origin, ray.direction * 10, out hit)))
+			{
+				//있으면 오브젝트를 저장한다.
+				target = hit.collider.gameObject;
+			}
 		}
 
 		return target;

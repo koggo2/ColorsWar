@@ -1,0 +1,87 @@
+﻿using System;
+using UnityEngine;
+using System.Collections;
+using System.Net.Sockets;
+using FreeNet;
+using FreeNetUnity;
+
+public class CWNetworkManager : MonoBehaviour
+{
+	private static CWNetworkManager _instance = null;
+	public static CWNetworkManager Instance { get { return _instance;} }
+
+	public Action OnSuccessConnected;
+	private CWFreeNetUnityService _gameServer;
+
+	void Awake()
+	{
+		// 네트워크 통신을 위해 CWFreeNetUnityService객체를 추가합니다.
+		this._gameServer = gameObject.AddComponent<CWFreeNetUnityService>();
+		
+		// 상태 변화(접속, 끊김 등)를 통보 받을 델리게이트 설정.
+		this._gameServer.AppCallbackOnStatusChanged += OnStatusChanged;
+
+		// 패킷 수신 델리게이트 설정.
+		this._gameServer.AppCallbackOnMessage += OnMessage;
+
+		_instance = this;
+	}
+
+	void Start()
+	{
+		//Connect();
+	}
+
+	public void Connect()
+	{
+		this._gameServer.Connect("127.0.0.1", 7979);
+	}
+
+	private void OnMessage(CPacket msg)
+	{
+		// 제일 먼저 프로토콜 아이디를 꺼내온다.  
+		PROTOCOL protocol_id = (PROTOCOL)msg.pop_protocol_id();
+
+		// 프로토콜에 따른 분기 처리.  
+		switch (protocol_id)
+		{
+			case PROTOCOL.CHAT_MSG_ACK:
+				{
+					string text = msg.pop_string();
+					CWUtility.Log("CHAT_MSG_ACK : " + text);
+					//GameObject.Find("GameMain").GetComponent<CGameMain>().on_receive_chat_msg(text);
+				}
+				break;
+		}
+	}
+
+	/// <summary>
+	/// 네트워크 상태 변경 시 호출될 콜백 메소드
+	/// </summary>
+	/// <param name="status"></param>
+	private void OnStatusChanged(NETWORK_EVENT status)
+	{
+		switch (status)
+		{
+			case NETWORK_EVENT.connected:
+				{
+					CWUtility.Log("On Connect");
+
+					CPacket msg = CPacket.create((short) PROTOCOL.CHAT_MSG_REQ);
+					msg.push("Hello!!");
+					this._gameServer.Send(msg);
+
+					OnSuccessConnected.Invoke();
+				}
+				break;
+			case NETWORK_EVENT.disconnected:
+				CWUtility.Log("Disconnected");
+				break;
+		}
+	}
+
+	public void Send(CPacket msg)
+	{
+		this._gameServer.Send(msg);
+	}
+}

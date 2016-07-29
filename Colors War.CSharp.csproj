@@ -67,6 +67,9 @@
     <Reference Include="UnityEditor.iOS.Extensions.Common">
       <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
     </Reference>
+    <Reference Include="FreeNet">
+      <HintPath>Assets\_freeNet\FreeNet.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Colors War.CSharp.Plugins.csproj">
@@ -75,10 +78,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\CWGameStateManager.cs" />
+    <Compile Include="Assets\CWLobbyStateController.cs" />
+    <Compile Include="Assets\CWLoginStateController.cs" />
+    <Compile Include="Assets\IStateController.cs" />
+    <Compile Include="Assets\_freeNet\CWFreeNetEventManager.cs" />
+    <Compile Include="Assets\_freeNet\CWFreeNetUnityService.cs" />
+    <Compile Include="Assets\_freeNet\CWNetworkManager.cs" />
+    <Compile Include="Assets\_freeNet\CWProtocol.cs" />
+    <Compile Include="Assets\_freeNet\CWRemoteServerPeer.cs" />
     <Compile Include="Assets\_resources\ProgressBar\Script\ProgressBarBehaviour.cs" />
     <Compile Include="Assets\_resources\ProgressBar\Script\ProgressRadialBehaviour.cs" />
     <Compile Include="Assets\_resources\ProgressBar\Script\Utils.cs" />
-    <Compile Include="Assets\_scripts\CWAI.cs" />
     <Compile Include="Assets\_scripts\CWMainStageManager.cs" />
     <Compile Include="Assets\_scripts\CWStageColorArmy.cs" />
     <Compile Include="Assets\_scripts\CWStageNode.cs" />

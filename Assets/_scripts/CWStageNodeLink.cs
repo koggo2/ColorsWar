@@ -54,11 +54,11 @@ public class NodeConnectionData
 		}
 		else
 		{
-			//if (_dispersionIndex >= Origin.LinkedStageNodeIdList.Count)
-			//	_dispersionIndex = 0;
+			if (_dispersionIndex >= Origin.NodeLinkList.Count)
+				_dispersionIndex = 0;
 
-			//Target = Origin.LinkedStageNodeIdList[_dispersionIndex++];
-			//cwStageColorArmy.Init(Target, Origin.Position, Target.Position);
+			Target = Origin.NodeLinkList[_dispersionIndex++];
+			cwStageColorArmy.Init(Target, Origin.Position, Target.Position);
 		}
 	}
 }
