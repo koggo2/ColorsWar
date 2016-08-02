@@ -71,6 +71,14 @@ namespace FreeNetUnity
 			connector.connect(endpoint);
 		}
 
+		public void Disconnect()
+		{
+			if (_gameServer != null)
+			{
+				_gameServer.Disconnect();
+			}
+		}
+
 		/// <summary>  
 		/// 접속 성공시 호출될 콜백 매소드.  
 		/// </summary>  
@@ -81,14 +89,14 @@ namespace FreeNetUnity
 			((CRemoteServerPeer)this._gameServer).set_eventmanager(this._eventManager);
 
 			// 유니티 어플리케이션으로 이벤트를 넘겨주기 위해서 매니저에 큐잉 시켜 준다.  
-			this._eventManager.EnqueueNetworkEvent(NETWORK_EVENT.connected);
+			this._eventManager.EnqueueNetworkEvent(NETWORK_EVENT.CONNECTED);
 		}
 
 		public void Send(CPacket msg)
 		{
 			try
 			{
-				this._gameServer.send(msg);
+				this._gameServer.Send(msg);
 			}
 			catch (Exception e)
 			{

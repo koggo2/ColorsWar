@@ -8,13 +8,16 @@ namespace FreeNetUnity
 	public enum NETWORK_EVENT : byte
 	{
 		// 접속 완료.  
-		connected,
+		CONNECTED,
 
 		// 연결 끊김.  
-		disconnected,
+		DISCONNECTED,
+
+		// 로그인 완료.
+		LOGIN_COMPLETED,
 
 		// 끝.  
-		end
+		END
 	}
 
 	/// <summary>  

@@ -11,6 +11,7 @@ public class CWNetworkManager : MonoBehaviour
 	public static CWNetworkManager Instance { get { return _instance;} }
 
 	public Action OnSuccessConnected;
+	public Action OnSuccessLogin;
 	private CWFreeNetUnityService _gameServer;
 
 	void Awake()
@@ -32,22 +33,35 @@ public class CWNetworkManager : MonoBehaviour
 		//Connect();
 	}
 
+	void OnDestroy()
+	{
+		_gameServer.Disconnect();
+	}
+
 	public void Connect()
 	{
-		this._gameServer.Connect("127.0.0.1", 7979);
+		_gameServer.Connect("127.0.0.1", 7979);
 	}
 
 	private void OnMessage(CPacket msg)
 	{
 		// 제일 먼저 프로토콜 아이디를 꺼내온다.  
-		PROTOCOL protocol_id = (PROTOCOL)msg.pop_protocol_id();
+		PROTOCOL protocol_id = (PROTOCOL)msg.PopProtocol_Id();
+
+		CWUtility.Log("Protocol ID : " + protocol_id);
 
 		// 프로토콜에 따른 분기 처리.  
 		switch (protocol_id)
 		{
+			case PROTOCOL.LOGIN_SUCCESS:
+				{
+					CWUtility.Log("Login Success.");
+					OnSuccessLogin.Invoke();
+				}
+				break;
 			case PROTOCOL.CHAT_MSG_ACK:
 				{
-					string text = msg.pop_string();
+					string text = msg.PopString();
 					CWUtility.Log("CHAT_MSG_ACK : " + text);
 					//GameObject.Find("GameMain").GetComponent<CGameMain>().on_receive_chat_msg(text);
 				}
@@ -63,21 +77,28 @@ public class CWNetworkManager : MonoBehaviour
 	{
 		switch (status)
 		{
-			case NETWORK_EVENT.connected:
+			case NETWORK_EVENT.CONNECTED:
 				{
-					CWUtility.Log("On Connect");
+					CWUtility.Log("Connect Success");
 
-					CPacket msg = CPacket.create((short) PROTOCOL.CHAT_MSG_REQ);
-					msg.push("Hello!!");
-					this._gameServer.Send(msg);
+					//CPacket msg = CPacket.create((short) PROTOCOL.CHAT_MSG_REQ);
+					//msg.push("Hello!!");
+					//this._gameServer.Send(msg);
 
 					OnSuccessConnected.Invoke();
 				}
 				break;
-			case NETWORK_EVENT.disconnected:
+			case NETWORK_EVENT.DISCONNECTED:
 				CWUtility.Log("Disconnected");
 				break;
 		}
+	}
+
+	public void Login(string id)
+	{
+		CPacket msg = CPacket.create((short) PROTOCOL.LOGIN);
+		msg.push(id);
+		this._gameServer.Send(msg);
 	}
 
 	public void Send(CPacket msg)

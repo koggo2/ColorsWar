@@ -5,8 +5,12 @@ public enum PROTOCOL : short
 {
 	BEGIN = 0,
 
-	CHAT_MSG_REQ = 1,
-	CHAT_MSG_ACK = 2,
+	LOGIN,
+	LOGIN_SUCCESS,
+	LOGIN_FAIL,
+
+	CHAT_MSG_REQ,
+	CHAT_MSG_ACK,
 
 	END
 }
