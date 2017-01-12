@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityVS.kjh.git.ColorsWar.CSharp.Plugins", "UnityVS.kjh.git.ColorsWar.CSharp.Plugins.csproj", "{C5536D70-F163-20CB-01CA-D3615962924A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityVS.kjh.git.ColorsWar.CSharp", "UnityVS.kjh.git.ColorsWar.CSharp.csproj", "{732D2488-E456-F425-5337-0AAF19E84A69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityVS.kjh.git.ColorsWar.CSharp.Editor", "UnityVS.kjh.git.ColorsWar.CSharp.Editor.csproj", "{72782858-DAF3-CF79-BF72-01813CEC93A7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C5536D70-F163-20CB-01CA-D3615962924A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5536D70-F163-20CB-01CA-D3615962924A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5536D70-F163-20CB-01CA-D3615962924A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5536D70-F163-20CB-01CA-D3615962924A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{732D2488-E456-F425-5337-0AAF19E84A69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{732D2488-E456-F425-5337-0AAF19E84A69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{732D2488-E456-F425-5337-0AAF19E84A69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{732D2488-E456-F425-5337-0AAF19E84A69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72782858-DAF3-CF79-BF72-01813CEC93A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72782858-DAF3-CF79-BF72-01813CEC93A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72782858-DAF3-CF79-BF72-01813CEC93A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72782858-DAF3-CF79-BF72-01813CEC93A7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

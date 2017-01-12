@@ -30,7 +30,7 @@ public class CWGameStateManager : MonoBehaviour
 		SetStateDictionary(GameState.STAGE, StagePrefab, OnStageCompleted);
 		SetStateDictionary(GameState.STAGE_FINISH, StageFinishPrefab, OnStageFinishCompleted);
 
-		LoadState(GameState.LOGIN);
+		LoadState(GameState.STAGE);
 	}
 
 	private void SetStateDictionary(GameState gameState, GameObject gameObject, OnStateCompleted stateCompletedCallback)
