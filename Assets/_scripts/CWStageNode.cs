@@ -96,20 +96,25 @@ public class CWStageNode : MonoBehaviour
 		//}
 
 		// 점령된 노드일 경우, 병력을 보내기 위한 준비 작업을 한다.
-		if (_state == NodeState.Occupied)
+		//if (_state == NodeState.Occupied)
+		//{
+		//	if (CWMainStageManager.Instance != null)
+		//	{
+		//		CWMainStageManager.Instance.ClickOccupiedNode(this);
+		//	}
+		//}
+		//// 점령되지 않은 노드에 대해 (for test)
+		//else if (_state == NodeState.Unoccupied || _state == NodeState.Charged)
+		//{
+		//	if (CWMainStageManager.Instance != null)
+		//	{
+		//		CWMainStageManager.Instance.SetNodeLink(this);
+		//	}
+		//}
+
+		if (CWBattleController.Instance != null)
 		{
-			if (CWMainStageManager.Instance != null)
-			{
-				CWMainStageManager.Instance.ClickOccupiedNode(this);
-			}
-		}
-		// 점령되지 않은 노드에 대해 (for test)
-		else if (_state == NodeState.Unoccupied || _state == NodeState.Charged)
-		{
-			if (CWMainStageManager.Instance != null)
-			{
-				CWMainStageManager.Instance.SetNodeLink(this);
-			}
+			CWBattleController.Instance.SelectStageNode(this);
 		}
 	}
 

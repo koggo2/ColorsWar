@@ -108,11 +108,14 @@
     <Compile Include="Assets\_scripts\CWStageCoreEngine.cs" />
     <Compile Include="Assets\_scripts\CWStageNode.cs" />
     <Compile Include="Assets\_scripts\CWStageNodeLink.cs" />
-    <Compile Include="Assets\_scripts\CWTaskManager.cs" />
     <Compile Include="Assets\_scripts\CWUtility.cs" />
+    <Compile Include="Assets\_scripts\_controller\CWBattleController.cs" />
     <Compile Include="Assets\_scripts\_interfaces\ICWTask.cs" />
-    <Compile Include="Assets\_scripts\_tasks\CWNodeSelectTask.cs" />
-    <Compile Include="Assets\_scripts\_tasks\CWNodeUpdateTask.cs" />
+    <Compile Include="Assets\_scripts\_tasks\CWTaskManager.cs" />
+    <Compile Include="Assets\_scripts\_tasks\CWTaskManager_StaticHelper.cs" />
+    <Compile Include="Assets\_scripts\_tasks\CWTask_NodeSelect.cs" />
+    <Compile Include="Assets\_scripts\_tasks\CWTask_SendArmy.cs" />
+    <Compile Include="Assets\_scripts\_tasks\CWTask_UpdateNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />

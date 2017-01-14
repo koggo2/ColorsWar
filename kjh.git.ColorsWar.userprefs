@@ -1,16 +1,37 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/_scripts/_tasks/CWNodeUpdateTask.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/_scripts/_tasks/CWTask_SendArmy.cs">
     <Files>
-      <File FileName="Assets/_scripts/CWSingletonBehavior.cs" Line="1" Column="1" />
-      <File FileName="Assets/CWGameStateManager.cs" Line="16" Column="2" />
-      <File FileName="Assets/_scripts/_interfaces/ICWTask.cs" Line="3" Column="25" />
-      <File FileName="Assets/_scripts/CWTaskManager.cs" Line="22" Column="3" />
+      <File FileName="Assets/_scripts/CWSingletonBehavior.cs" Line="18" Column="4" />
+      <File FileName="Assets/CWGameStateManager.cs" Line="17" Column="39" />
+      <File FileName="Assets/_scripts/_interfaces/ICWTask.cs" Line="4" Column="2" />
       <File FileName="Assets/_scripts/CWMainStageManager.cs" Line="228" Column="8" />
-      <File FileName="Assets/_scripts/CWStageNode.cs" Line="111" Column="40" />
-      <File FileName="Assets/_scripts/CWStageCoreEngine.cs" Line="21" Column="3" />
-      <File FileName="Assets/_scripts/_tasks/CWNodeSelectTask.cs" Line="9" Column="3" />
-      <File FileName="Assets/_scripts/_tasks/CWNodeUpdateTask.cs" Line="7" Column="2" />
+      <File FileName="Assets/_scripts/CWStageCoreEngine.cs" Line="31" Column="52" />
+      <File FileName="Assets/_scripts/_tasks/CWTask_NodeSelect.cs" Line="37" Column="19" />
+      <File FileName="Assets/_scripts/_tasks/CWTask_UpdateNode.cs" Line="29" Column="34" />
+      <File FileName="Assets/_scripts/_tasks/CWTaskManager_StaticHelper.cs" Line="9" Column="17" />
+      <File FileName="Assets/_scripts/_tasks/CWTaskManager.cs" Line="46" Column="14" />
+      <File FileName="Assets/_scripts/_controller/CWBattleController.cs" Line="42" Column="41" />
+      <File FileName="Assets/_scripts/CWStageNode.cs" Line="15" Column="14" />
+      <File FileName="Assets/_scripts/CWUtility.cs" Line="25" Column="2" />
+      <File FileName="Assets/_scripts/_tasks/CWTask_SendArmy.cs" Line="6" Column="2" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="kjh.git.ColorsWar" expanded="True">
+            <Node name="Assembly-CSharp" expanded="True">
+              <Node name="_scripts" expanded="True">
+                <Node name="_controller" expanded="True" />
+                <Node name="_interfaces" expanded="True" />
+                <Node name="_tasks" expanded="True">
+                  <Node name="CWTask_SendArmy.cs" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

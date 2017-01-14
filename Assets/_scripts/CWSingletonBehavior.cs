@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CWSingletonBehavior : MonoBehaviour
+public class CWSingletonBehavior<T> : MonoBehaviour where T : class
 {
-	static public CWSingletonBehavior Instance {
+	static public T Instance {
 		get { return _instance; }
 	}
-	static private CWSingletonBehavior _instance = null;
+	static private T _instance;
 
 	virtual protected void Awake()
 	{
@@ -16,6 +16,6 @@ public class CWSingletonBehavior : MonoBehaviour
 			Debug.LogError ("Another instance has been created. Check your code..!");
 			return;
 		}
-		_instance = this;
+		_instance = this as T;
 	}
 }
